@@ -26,7 +26,6 @@ function App() {
     return (
         <>
             <Header />
-            
 
             {/* lighthouse gallary*/}
 
@@ -123,16 +122,31 @@ function App() {
                         />
                     </div>
                     <div className="hidden md:flex gap-8 mt-6">
-                        {images.map((item, index) => (
-                            <button
-                                className="w-1/4 rounded-xl overflow-hidden"
-                                onClick={() =>
-                                    setlightBox({ status: true, index })
-                                }
-                            >
-                                <img src={`../images/${item}`} />
-                            </button>
-                        ))}
+                        {images.map((item, index) => {
+                            if (index === 0) {
+                                return (
+                                    <button
+                                    className="w-1/4 rounded-xl overflow-hidden relative border-2 border-p-orange"
+                                    onClick={() =>
+                                        setlightBox({ status: true, index })
+                                    }
+                                >
+                                    <img src={`../images/${item}`} />
+                                    <div className="absolute inset-0 bg-white/50  "></div>
+                                </button>
+                                 )
+                            }
+                            return (
+                                <button
+                                    className="w-1/4 rounded-xl overflow-hidden"
+                                    onClick={() =>
+                                        setlightBox({ status: true, index })
+                                    }
+                                >
+                                    <img src={`../images/${item}`} />
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
                 {/* info container */}
