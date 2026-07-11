@@ -111,7 +111,7 @@ function App() {
                     </div>
                 </div>
             </div>
-            <div className="container *:flex-1 flex flex-col md:flex-row justify-between items-center gap-x-10 m-auto md:mt-5 md:p-15">
+            <div className="container *:flex-1 flex flex-col md:flex-row justify-between items-center gap-x-10 m-auto md:mt-5 md:p-15 max-w-[1280px]">
                 {/* images container */}
                 <div className="w-full  md:w-[40%]">
                     <div className="">
@@ -126,15 +126,15 @@ function App() {
                             if (index === 0) {
                                 return (
                                     <button
-                                    className="w-1/4 rounded-xl overflow-hidden relative border-2 border-p-orange"
-                                    onClick={() =>
-                                        setlightBox({ status: true, index })
-                                    }
-                                >
-                                    <img src={`../images/${item}`} />
-                                    <div className="absolute inset-0 bg-white/50  "></div>
-                                </button>
-                                 )
+                                        className="w-1/4 rounded-xl overflow-hidden relative border-2 border-p-orange"
+                                        onClick={() =>
+                                            setlightBox({ status: true, index })
+                                        }
+                                    >
+                                        <img src={`../images/${item}`} />
+                                        <div className="absolute inset-0 bg-white/50  "></div>
+                                    </button>
+                                );
                             }
                             return (
                                 <button
@@ -251,13 +251,17 @@ function App() {
                 </div>
             </div>
 
-            {/* <footer className="attribution absolute bottom-0">
+            <footer class="mt-7 text-center w-full md:absolute md:bottom-0">
                 Challenge by{" "}
                 <a href="https://www.frontendmentor.io?ref=challenge">
                     Frontend Mentor
                 </a>
-                . Coded by <a href="#">Your Name Here</a>.
-            </footer> */}
+                . Coded by{" "}
+                <a href="https://portfolio-seven-psi-4fxeefir23.vercel.app/">
+                    Yousef
+                </a>
+                .
+            </footer>
         </>
     );
 }
