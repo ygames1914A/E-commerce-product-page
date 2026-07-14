@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
@@ -6,6 +6,7 @@ import { useCart } from "./context/CartContext";
 
 function App() {
     const [count, setCount] = useState(0);
+    const [mainImage, setMainImage] = useState(0);
     const [lightBox, setlightBox] = useState({ status: false, index: 0 });
 
     const { cartItems, setCartItems, cartToggle, setCartToggle } = useCart();
@@ -62,7 +63,10 @@ function App() {
                                 onClick={() =>
                                     setlightBox((prev) => {
                                         if (prev.index - 1 < 0) {
-                                            return prev;
+                                            return {
+                                                ...prev,
+                                                index: images.length - 1,
+                                            };
                                         }
                                         return {
                                             ...prev,
@@ -77,11 +81,8 @@ function App() {
                                 className="cursor-pointer size-12 bg-white rounded-full flex items-center justify-center"
                                 onClick={() =>
                                     setlightBox((prev) => {
-                                        if (
-                                            prev.index + 1 >
-                                            images.length - 1
-                                        ) {
-                                            return prev;
+                                        if (prev.index + 1 === images.length) {
+                                            return { ...prev, index: 0 };
                                         }
                                         return {
                                             ...prev,
@@ -97,7 +98,7 @@ function App() {
                     <div className="w-[50%] mt-5 flex gap-5 ">
                         {imagesThumbnail.map((item, index) => (
                             <button
-                                className={`relative w-1/4 rounded-xl overflow-hidden ${index === lightBox.index ? "border-2 border-p-orange" : ""}`}
+                                className={`relative w-1/4 rounded-xl overflow-hidden cursor-pointer ${index === lightBox.index ? "border-2 border-p-orange" : ""}`}
                                 onClick={() =>
                                     setlightBox({ status: true, index })
                                 }
@@ -114,34 +115,46 @@ function App() {
             <div className="container *:flex-1 flex flex-col md:flex-row justify-between items-center gap-x-10 m-auto md:mt-5 md:p-15 max-w-[1280px]">
                 {/* images container */}
                 <div className="w-full  md:w-[40%]">
+                    {/* Main image */}
                     <div className="">
                         <img
-                            className="md:rounded-xl"
-                            src={`../images/${images[0]}`}
-                            alt=""
+                            className="md:rounded-xl cursor-pointer"
+                            src={`../images/${images[mainImage]}`}
+                            alt="The main photo of the product"
+                            onClick={() =>
+                                setlightBox({ status: true, index: 0 })
+                            }
                         />
                     </div>
-                    <div className="hidden md:flex gap-8 mt-6">
+                    <div className="hidden md:flex gap-8 mt-6 *:cursor-pointer">
                         {images.map((item, index) => {
-                            if (index === 0) {
+                            // if (index === 0) {
+                            //     return (
+                            //         <button className="w-1/4 rounded-xl overflow-hidden relative border-2 border-p-orange">
+                            //             <img src={`../images/${item}`} />
+
+                            //         </button>
+                            //     );
+                            // }
+
+                            if (index === mainImage) {
                                 return (
                                     <button
                                         className="w-1/4 rounded-xl overflow-hidden relative border-2 border-p-orange"
-                                        onClick={() =>
-                                            setlightBox({ status: true, index })
-                                        }
+                                        onClick={() => {
+                                            setMainImage(index);
+                                        }}
                                     >
                                         <img src={`../images/${item}`} />
-                                        <div className="absolute inset-0 bg-white/50  "></div>
+                                        <div className="absolute inset-0 bg-white/50"></div>
                                     </button>
                                 );
                             }
+
                             return (
                                 <button
-                                    className="w-1/4 rounded-xl overflow-hidden"
-                                    onClick={() =>
-                                        setlightBox({ status: true, index })
-                                    }
+                                    className="w-1/4 rounded-xl overflow-hidden relative"
+                                    onClick={() => setMainImage(index)}
                                 >
                                     <img src={`../images/${item}`} />
                                 </button>
@@ -251,7 +264,7 @@ function App() {
                 </div>
             </div>
 
-            <footer class="mt-7 text-center w-full md:absolute md:bottom-0">
+            <footer className="mt-7 text-center w-full md:absolute md:bottom-0">
                 Challenge by{" "}
                 <a href="https://www.frontendmentor.io?ref=challenge">
                     Frontend Mentor
