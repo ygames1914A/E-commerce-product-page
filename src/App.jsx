@@ -24,6 +24,43 @@ function App() {
         "image-product-4-thumbnail.jpg",
     ];
 
+
+
+    useEffect(() => {
+        function rightArrow (e) {
+            if (e.key === "ArrowRight") {
+                e.preventDefault()
+                setlightBox(prev => {
+                    if (prev.index + 1 === imagesThumbnail.length) {
+                        return {...prev, index:0}
+                    }
+                    return {...prev, index:prev.index + 1}
+                })
+            }
+            
+        }
+        function leftArrow (e) {
+            if (e.key === "ArrowLeft") {
+                e.preventDefault()
+                setlightBox(prev => {
+                    if (prev.index - 1 < 0) {
+                        return {...prev, index:imagesThumbnail.length - 1}
+                    }
+                    return {...prev, index:prev.index - 1}
+                })
+            }
+            
+        }
+        window.addEventListener('keydown',rightArrow)
+        window.addEventListener('keydown',leftArrow)
+      return () => {
+        window.removeEventListener('keydown',rightArrow)
+        window.removeEventListener('keydown',leftArrow)
+      }
+    }, [])
+    
+
+
     return (
         <>
             <Header />
@@ -122,7 +159,7 @@ function App() {
                             src={`../images/${images[mainImage]}`}
                             alt="The main photo of the product"
                             onClick={() =>
-                                setlightBox({ status: true, index: 0 })
+                                setlightBox({ status: true, index: mainImage })
                             }
                         />
                     </div>
